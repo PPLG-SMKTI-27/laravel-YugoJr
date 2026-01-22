@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.app')
 
 @section('title', 'Portofolio Saya')
 
@@ -18,4 +18,9 @@
 
     <h2>Kontak</h2>
     <p>Email: {{ $email }}</p>
+
+@section('scripts')
+<script>
+    console.log('Halaman Portofolio');
+</script>
 @endsection

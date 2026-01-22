@@ -14,4 +14,4 @@ Route::get('/ProjectSaya', function () {
     return view('ProjectSaya');
 });
 
-Route::get('/portofolio', [PortofolioController::class, 'index']);
+Route::get('/Portofolio', [PortofolioController::class, 'index']);

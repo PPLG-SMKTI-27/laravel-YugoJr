@@ -25,6 +25,6 @@ class PortofolioController extends Controller
             ]
         ];
 
-        return view('layouts.index', $data);
+        return view('Portofolio.index', $data);
     }
 }
