@@ -89,11 +89,19 @@ gap: 20px;
 <header>
 <h1><?php echo $name; ?></h1>
 <p><?php echo $title; ?></p>
+
+    @if(session('success'))
+        <div style="color: rgb(4, 255, 4); margin-bottom: 15px;">
+            {{session('success') }}
+            @endif
+        </div>
+  
 </header>
 
 <nav>
 <a href="index.php">Home</a>
 <a href="ProjectSaya">Project</a>
+<a href="login">Login</a>
 </nav>
 
 <img src="images/kurakura.png" alt="Photo">
