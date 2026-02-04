@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -15,11 +17,14 @@ class AuthController extends Controller
     // Proses login
     public function authenticate(Request $request)
     {
+        $admin = DB::table('admins')
+            ->where('email', $request->email)
+            ->first();
 
-        if ($request->email === 'admin@email.com' && $request->password === '123456') {
+        if ($admin && Hash::check($request->password, $admin->password)) {
             return redirect('/')->with('success', 'Login berhasil');
-         }
+        }
 
-            return back()->with('error', 'Email atau password salah');
+        return back()->with('error', 'Email atau password salah');
     }
 }
