@@ -1,24 +1,49 @@
 <!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <title>@yield('title')</title>
-    <style>
-        body { font-family: Arial, sans-serif; background:#f4f4f4; }
-        .container {width: 80%;margin: 40px auto;background: #ffffff;     /* warna netral */padding: 30px;           /* jarak isi ke tepi */border-radius: 8px;      /* sudut halus */box-shadow: 0 0 10px rgba(0,0,0,0.1);}
-        .project { border-left: 4px solid #3498db; padding-left: 10px; margin-bottom: 15px; }
-        footer { text-align: center; margin-top: 20px; color: gray; }
-    </style>
-</head>
-<body>
-@include('partials.navbar')
-<div class="container">
-    @yield('content')
-</div>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-<footer>
-    © 2026 Portofolio Saya
-</footer>
+        <title>{{ config('app.name', 'Laravel') }}</title>
 
-</body>
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.bunny.net">
+        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+        <!-- Scripts -->
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    </head>
+    <script>
+function toggleDropdown() {
+    document.getElementById('dropdownMenu').classList.toggle('hidden');
+}
+
+window.addEventListener('click', function(e) {
+    if (!e.target.closest('#dropdownMenu') && !e.target.closest('button')) {
+        document.getElementById('dropdownMenu').classList.add('hidden');
+    }
+});
+</script>
+
+    <body class="font-sans antialiased">
+        <div class=" bg-gray-100 dark:bg-gray-900">
+            @include('layouts.navigation')
+                                         <!-- Page Content -->
+            <main>
+                @yield('content')   
+            </main>
+
+            <!-- Page Heading -->
+            @isset($header)
+                <header class="bg-white dark:bg-gray-800 shadow">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        {{ $header }}
+                    </div>
+                </header>
+            @endisset
+
+
+        </div>
+    </body>
 </html>

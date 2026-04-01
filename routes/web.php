@@ -1,21 +1,25 @@
 <?php
 
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PortofolioController;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\ProjectController;
+use App\Models\PortofolioProfile    ;
+use App\Models\PortofolioProject;
 
-{
-}
+Route::get('/', [PortofolioController::class, 'index'])->name('home');
 
-Route::get('/', function () {
-    return view('home');
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    Route::resource('projects', ProjectController::class);
+    });
 });
 
-Route::get('/ProjectSaya', function () {
-    return view('ProjectSaya');
-});
-
-Route::get('/Portofolio', [PortofolioController::class, 'index']);
-
-Route::get('/login', [AuthController::class, 'index']);
-Route::post('/login', [AuthController::class, 'authenticate']);
+require __DIR__.'/auth.php';

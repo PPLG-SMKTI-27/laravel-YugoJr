@@ -1,27 +1,17 @@
 <?php
-$name = "Glenn Marcellino Oktaviyanto";
-$title = "Web/Game Developer | UI/UX Designer";
-$about = "Saya adalah seorang web developer yang berfokus pada pengembangan aplikasi berbasis web menggunakan PHP, MySQL, dan JavaScript dan gim menggunakan Unreal Engine dan Unity.";
 
 
-$skills = ["Unreal Engine", "Unity", "PHP", "Laravel", "MySQL", "HTML & CSS", "JavaScript"];
-
-
-$projects = [
-["title" => "Aplikasi Perizinan Siswa", "desc" => "Aplikasi berbasis PHP untuk mengelola izin siswa."],
-["title" => "Website Portofolio", "desc" => "Website portofolio pribadi dengan desain modern."],
-["title" => "Sistem Login", "desc" => "Sistem autentikasi login dan register menggunakan PHP & MySQL."]
-];
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<title>Portofolio <?php echo $name; ?></title>
+<title>Portofolio {{ $profile->nama }}</title>
 <style>
 body {
 margin: 0;
 font-family: Arial, Helvetica, sans-serif;
+
 background: #fff7f0;
 color: #333;
 }
@@ -87,13 +77,13 @@ gap: 20px;
 </head>
 <body>
 <header>
-<h1><?php echo $name; ?></h1>
-<p><?php echo $title; ?></p>
+<h1><?php echo $profile->nama; ?></h1>
+<p><?php echo $profile->profesi; ?></p>
 
     @if(session('success'))
         <div style="color: rgb(4, 255, 4); margin-bottom: 15px;">
             {{session('success') }}
-            @endif
+    @endif
         </div>
   
 </header>
@@ -101,21 +91,28 @@ gap: 20px;
 <nav>
 <a href="index.php">Home</a>
 <a href="ProjectSaya">Project</a>
-<a href="login">Login</a>
+
+    @guest
+        <a href="{{ route('login') }}">Login</a>
+        <a href="{{ route('register') }}">Register</a>
+    @endguest
+
+    @auth
+        <a href="{{ route('admin.projects.index') }}">Dashboard</a>
+    @endauth
+
 </nav>
 
 <img src="images/kurakura.png" alt="Photo">
 
 <section class="about">
 <h2 class="section-title">Tentang Saya</h2>
-<p><?php echo $about; ?></p>
+<p><?php echo $profile->tentang; ?><p>
 </section>
 <section>
 <h2 class="section-title">Keahlian</h2>
 <div class="skills">
-<?php foreach ($skills as $skill): ?>
-<div class="skill"><?php echo $skill; ?></div>
-<?php endforeach; ?>
+<p>Skills: {{ $profile->skills }}</p>
 </div>
 </section>
 <section>
